@@ -12,6 +12,5 @@ public interface ProductRepository extends MongoRepository<Product, String> {
 
     List<Product> findByColor(String color);
 
-    List<Product> findBySizeAndMaterial(String size, String material);
 }
 
