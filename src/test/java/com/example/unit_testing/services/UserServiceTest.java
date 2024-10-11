@@ -8,8 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UserServiceTest {
@@ -43,7 +44,7 @@ public class UserServiceTest {
         savedUser.setId("1");
         savedUser.setFirstName(user.getFirstName());
         savedUser.setLastName(user.getLastName());
-        savedUser.setId(user.getEmail());
+        savedUser.setEmail(user.getEmail());
 
         when(userRepository.save(user)).thenReturn(savedUser);
 
@@ -59,7 +60,73 @@ public class UserServiceTest {
 
         verify(userRepository, times(1)).save(user);
     }
+
+    @Test
+    public void testGetUserById_UserExists() {
+        // Arrange
+        // definiera ett user id och skapa en user
+        String userId = "1";
+        User user = new User();
+        user.setId(userId);
+        user.setFirstName("Nisse");
+        user.setLastName("Jannesson");
+        user.setEmail("janne@gmail.com");
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        // Act
+        // förväntade resultatet
+        User result = userService.getUserById(userId);
+
+        // Assert
+        // se till user id inte är null och att fältet matchar
+        assertNotNull(result, "Returned user should not be null");
+        assertEquals(userId, result.getId(), "User ID should match");
+        assertEquals("Nisse", result.getFirstName(), "First name should match.");
+        assertEquals("Jannesson", result.getLastName(), "Last name should match.");
+        assertEquals("janne@gmail.com", result.getEmail(), "Email should match.");
+
+        verify(userRepository, times(1)).findById(userId);
+    }
+
+    @Test
+    public void testGetUserById_UserDoesNotExists() {
+        // Arrange
+        String userId = "nonexistent_id";
+
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // Act
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            userService.getUserById(userId);
+        }, "Expected getUserById to throw, but it didn't");
+
+        // Assert
+        assertTrue(exception.getMessage().contains("User not found with id: " + userId));
+
+        verify(userRepository, times(1)).findById(userId);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
