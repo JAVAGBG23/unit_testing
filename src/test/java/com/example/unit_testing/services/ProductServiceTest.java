@@ -1,5 +1,6 @@
 package com.example.unit_testing.services;
 
+import com.example.unit_testing.exceptions.ProductNotFoundException;
 import com.example.unit_testing.models.Product;
 import com.example.unit_testing.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +12,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class ProductServiceTest {
@@ -66,6 +66,57 @@ public class ProductServiceTest {
     }
 
 
+   /* @Test
+    public void testDeleteProduct_success() {
+        // Arrange
+        String productId = "1";
+
+        doNothing().when(productRepository).deleteById(productId);
+
+        // Act
+        productService.deleteProduct(productId);
+
+        // Assert
+        verify(productRepository, times(1)).deleteById(productId);
+    }*/
+
+    @Test
+    public void testDeleteProduct_ProductDoesNotExist() {
+        // Arrange
+        String nonExistentProductId = "nonexistent_id";
+
+       when(productRepository.existsById(nonExistentProductId)).thenReturn(false);
+
+        // Act
+        ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () -> {
+            productService.deleteProduct(nonExistentProductId);
+        }, "Expected deleteProduct to throw ProductNotFoundException, but it did not");
+
+        // Assert
+        assertTrue(exception.getMessage().contains("Product not found with id: " + nonExistentProductId));
+
+        verify(productRepository, never()).deleteById(anyString());
+    }
+
+
+
+
+
+
+
+
+
 
 
 }
+
+
+
+
+
+
+
+
+
+
+

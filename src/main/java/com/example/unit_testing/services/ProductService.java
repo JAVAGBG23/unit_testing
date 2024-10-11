@@ -1,6 +1,7 @@
 package com.example.unit_testing.services;
 
 import com.example.unit_testing.dto.ProductDTO;
+import com.example.unit_testing.exceptions.ProductNotFoundException;
 import com.example.unit_testing.models.Product;
 import com.example.unit_testing.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,13 @@ public class ProductService {
      * @param id The ID of the product to delete.
      */
     public void deleteProduct(String id) {
+        // check id product exists
+       boolean exists = productRepository.existsById(id);
+
+        if(!exists) {
+            throw new ProductNotFoundException("Product not found with id: " + id);
+        }
+
         productRepository.deleteById(id);
     }
 
