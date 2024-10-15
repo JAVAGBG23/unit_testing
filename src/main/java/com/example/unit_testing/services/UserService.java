@@ -21,6 +21,8 @@ public class UserService {
      */
     public User createUser(User user){
         System.out.println("hejhej");
+        System.out.println("hejhej");
+
         return userRepository.save(user);
     }
 
