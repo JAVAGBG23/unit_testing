@@ -1,21 +1,64 @@
-# Identifierade negativa scenarier
+## createProduct
+String productJson = """
+{
+"name": "Test Product",
+"description": "A test product",
+"price": 99.99,
+"stockQuantity": 50
+}
+""";
 
-## skapa produkt:
-Skapa en produkt där obligatoriska fält saknas (t.ex. namn, pris).
+## testGetAllProducts
+Product product1 = new Product();
+product1.setName("Product A");
+product1.setDescription("Description A");
+product1.setPrice(10.99);
+product1.setStockQuantity(100);
 
-Skapa en produkt med ogiltiga data (t.ex. negativt pris, för stort lagerkvantitet).
+Product product2 = new Product();
+product2.setName("Product B");
+product2.setDescription("Description B");
+product2.setPrice(20.99);
+product2.setStockQuantity(200);
 
-## getAllProducts:
-Hantera fall där repository returnerar en tom lista.
+## testGetProductsByName
+Product product = new Product();
+product.setName("Test Product");
+product.setDescription("Description for Test Product");
+product.setPrice(99.99);
+product.setStockQuantity(50);
 
-## getProductsByName:
-Hämta produkter med ett namn som inte finns.
-Skickar en null eller tom sträng som namn.
+## testGetProductsByPriceRange
+Product product1 = new Product();
+product1.setName("Product A");
+product1.setDescription("Description A");
+product1.setPrice(15.99);
+product1.setStockQuantity(100);
 
-## getProductsByPriceRange:
-Ogiltiga prisintervall (t.ex. minPrice större än maxPrice).
-Negativa prisvärden.
+Product product2 = new Product();
+product2.setName("Product B");
+product2.setDescription("Description B");
+product2.setPrice(25.99);
+product2.setStockQuantity(200);
 
-## getProductsByColor:
-Hämta produkter med en färg som inte finns.
-Skicka en null eller tom sträng som färg.
+## testGetProductsByColor
+Product product1 = new Product();
+product1.setName("Product A");
+product1.setDescription("Description A");
+product1.setColor("Red");
+product1.setPrice(15.99);
+product1.setStockQuantity(100);
+
+Product product2 = new Product();
+product2.setName("Product B");
+product2.setDescription("Description B");
+product2.setColor("Red");
+product2.setPrice(25.99);
+product2.setStockQuantity(200);
+
+## testDeleteProduct
+Product product = new Product();
+product.setName("Product to Delete");
+product.setDescription("Will be deleted");
+product.setPrice(9.99);
+product.setStockQuantity(50);
