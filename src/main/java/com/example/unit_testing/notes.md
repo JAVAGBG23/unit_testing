@@ -62,3 +62,24 @@ product.setName("Product to Delete");
 product.setDescription("Will be deleted");
 product.setPrice(9.99);
 product.setStockQuantity(50);
+
+## pom.xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-failsafe-plugin</artifactId>
+    <version>3.0.0-M5</version>
+    <executions>
+       <execution>
+          <goals>
+             <goal>integration-test</goal>
+             <goal>verify</goal>
+          </goals>
+       </execution>
+    </executions>
+</plugin>
+
+## application.properties
+de.flapdoodle.mongodb.embedded.version=4.0.2
+logging.level.root=WARN
+logging.level.org.springframework=WARN
+logging.level.org.hibernate=ERROR
