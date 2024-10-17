@@ -13,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Maven tests with debug
-      - run: mvn test -X
-
       - name: Checkout code
         uses: actions/checkout@v3
 
