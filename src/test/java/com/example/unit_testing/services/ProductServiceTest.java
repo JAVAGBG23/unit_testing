@@ -9,10 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -178,21 +175,28 @@ public class ProductServiceTest {
     @Test
     public void testDeleteProduct_Success() {
         // Arrange:
-        // define a product ID to delete
+        // Define a product ID to delete
         String productId = "1";
 
-        // mock the behavior of productRepository.deleteById (void method)
+        // Mock a product that will be found by findById
+        Product mockProduct = new Product();
+        mockProduct.setId(productId);
+
+        // Mock the behavior of productRepository.findById
+        when(productRepository.findById(productId)).thenReturn(Optional.of(mockProduct));
+
+        // Mock the behavior of productRepository.deleteById (void method)
         doNothing().when(productRepository).deleteById(productId);
 
         // Act:
-        // call the deleteProduct method
+        // Call the deleteProduct method
         productService.deleteProduct(productId);
 
         // Assert:
-        // verify that deleteById was called once with the correct ID
+        // Verify that findById and deleteById were called once with the correct ID
+        verify(productRepository, times(1)).findById(productId);
         verify(productRepository, times(1)).deleteById(productId);
     }
-
     /**
      * Negative Test: deleteProduct with non-existent ID should throw NoSuchElementException.
      */
