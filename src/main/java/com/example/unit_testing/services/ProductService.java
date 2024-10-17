@@ -78,21 +78,15 @@ public class ProductService {
     /**
      * Deletes a product by its ID.
      *
-     * @param id The ID of the product to delete.
+     * @param productId The ID of the product to delete.
      * @throws NoSuchElementException if the product does not exist.
      * @throws IllegalArgumentException if the ID is null or empty.
      */
-    public void deleteProduct(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Product ID cannot be null or empty.");
-        }
+    public void deleteProduct(String productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NoSuchElementException("Product not found with id: " + productId));
 
-        boolean exists = productRepository.existsById(id);
-        if (!exists) {
-            throw new NoSuchElementException("Product not found with id: " + id);
-        }
-
-        productRepository.deleteById(id);
+        productRepository.deleteById(productId);
     }
 
     /**

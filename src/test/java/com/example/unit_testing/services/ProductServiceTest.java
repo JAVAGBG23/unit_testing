@@ -174,29 +174,25 @@ public class ProductServiceTest {
      */
     @Test
     public void testDeleteProduct_Success() {
-        // Arrange:
-        // Define a product ID to delete
+        // Arrange
         String productId = "1";
-
-        // Mock a product that will be found by findById
         Product mockProduct = new Product();
         mockProduct.setId(productId);
 
-        // Mock the behavior of productRepository.findById
+        // Mock behavior of productRepository.findById
         when(productRepository.findById(productId)).thenReturn(Optional.of(mockProduct));
 
-        // Mock the behavior of productRepository.deleteById (void method)
+        // Mock behavior of productRepository.deleteById (void method)
         doNothing().when(productRepository).deleteById(productId);
 
-        // Act:
-        // Call the deleteProduct method
+        // Act
         productService.deleteProduct(productId);
 
-        // Assert:
-        // Verify that findById and deleteById were called once with the correct ID
+        // Assert
         verify(productRepository, times(1)).findById(productId);
         verify(productRepository, times(1)).deleteById(productId);
     }
+
     /**
      * Negative Test: deleteProduct with non-existent ID should throw NoSuchElementException.
      */

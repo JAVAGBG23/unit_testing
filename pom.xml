@@ -71,7 +71,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.1</version>
 				<configuration>
-					<forkCount>0</forkCount> <!-- Inaktivera forkning -->
+					<argLine>@{argLine} -Xshare:off</argLine>
+					<parallel>all</parallel>
 				</configuration>
 			</plugin>
 
