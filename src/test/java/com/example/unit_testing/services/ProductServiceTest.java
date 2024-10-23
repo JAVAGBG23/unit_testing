@@ -211,7 +211,7 @@ public class ProductServiceTest {
         assertEquals("Product not found with id: " + nonExistentId, exception.getMessage());
 
         // Verify
-        verify(productRepository, times(1)).existsById(nonExistentId);
+        verify(productRepository).findById(nonExistentId);
         verify(productRepository, never()).deleteById(anyString());
     }
 
