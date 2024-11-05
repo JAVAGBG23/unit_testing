@@ -65,7 +65,7 @@ public class ProductService {
     public List<Product> getAllProducts() {
         List<Product> products = productRepository.findAll();
         if (products == null) {
-            throw new IllegalArgumentException("Failed to retrieve products.");
+            throw new IllegalArgumentException("Failed to fetch products.");
         }
         return products;
     }
